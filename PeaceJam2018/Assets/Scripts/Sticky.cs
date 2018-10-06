@@ -9,12 +9,12 @@ public class Sticky : MonoBehaviour {
 
 	private void Start() {
 		// set up color
-		Color[] colors = GameController.Instance.colorWheel;
-		if(colorID < 0 || colorID >= colors.Length) {
-			colorID = Random.Range(0, colors.Length);
+		Sprite[] sprites = GameController.Instance.colorWheel;
+		if(colorID < 0 || colorID >= sprites.Length) {
+			colorID = Random.Range(0, sprites.Length);
 		}
 
-		GetComponentInChildren<SpriteRenderer>().color = GameController.Instance.colorWheel[colorID];
+		GetComponentInChildren<SpriteRenderer>().sprite = GameController.Instance.colorWheel[colorID];
 
 		// set player as core object
 		PlayerController pc = GetComponent<PlayerController>();

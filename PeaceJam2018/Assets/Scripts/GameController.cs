@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour {
 	public GameObject player;
-	public Color[] colorWheel;
+	public Sprite[] colorWheel;
 
     private static GameController instance;
 
