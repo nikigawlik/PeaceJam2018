@@ -6,9 +6,25 @@ public class GameController : MonoBehaviour {
 	public GameObject player;
 	public Color[] colorWheel;
 
-	public static GameController instance;
+    private static GameController instance;
 
-	private void Start() {
-		instance = this;
+    public static GameController Instance
+    {
+        get
+        {
+			if(instance == null) {
+				instance = Object.FindObjectOfType<GameController>();
+			}
+            return instance;
+        }
+
+        set
+        {
+            instance = value;
+        }
+    }
+
+    private void Start() {
+		Instance = this;
 	}
 }
