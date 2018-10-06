@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Sticky : MonoBehaviour {
-    private Sticky coreObject = null;
+	public int colorID = -1;
+
+    public Sticky coreObject = null;
 
 	private void Start() {
+		// set up color
+		Color[] colors = GameController.instance.colorWheel;
+		if(colorID < 0 || colorID >= colors.Length) {
+			colorID = Random.Range(0, colors.Length);
+		}
+
+		GetComponentInChildren<SpriteRenderer>().color = GameController.instance.colorWheel[colorID];
+
+		// set player as core object
 		PlayerController pc = GetComponent<PlayerController>();
 		if(pc != null) {
 			CoreObject = this;
@@ -25,7 +36,7 @@ public class Sticky : MonoBehaviour {
         }
     }
 
-    public void AttachBlob(Sticky otherSticky) {
+    public bool AttachBlob(Sticky otherSticky) {
 		if(coreObject != null) {
 			Rigidbody2D blobRB = otherSticky.GetComponent<Rigidbody2D>();
 
@@ -33,7 +44,9 @@ public class Sticky : MonoBehaviour {
 			otherSticky.gameObject.transform.SetParent(this.transform);
 
 			otherSticky.coreObject = coreObject;
+			return true;
 		}
+		return false;
 	}
 
 	// old spring based system

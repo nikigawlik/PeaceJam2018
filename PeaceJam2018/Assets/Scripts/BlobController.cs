@@ -7,11 +7,21 @@ public class BlobController : MonoBehaviour {
 
 	private void OnCollisionEnter2D(Collision2D other) {
 		if(!isAttached) {
-			Sticky stick = other.collider.GetComponent<Sticky>();
+			Sticky otherStick = other.collider.gameObject.GetComponent<Sticky>();
+			Sticky myStick = GetComponent<Sticky>();
 
-			if(stick != null) {
-				stick.AttachBlob(this.GetComponent<Sticky>());
-				this.isAttached = true;
+			if(otherStick != null) {
+				// calculate difference in colors
+				int colorDifference = Mathf.Abs(otherStick.colorID - myStick.colorID);
+				// handle case where it wraps over
+				if(colorDifference == GameController.instance.colorWheel.Length-1) {
+					colorDifference = 1;
+				}
+
+				if(colorDifference <= 1) {
+					bool success = otherStick.AttachBlob(this.GetComponent<Sticky>());
+					this.isAttached = success;
+				}
 			}
 		}
 	}
